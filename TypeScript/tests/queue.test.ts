@@ -30,6 +30,26 @@ test("test peek: queue with 2 element should peek the one that was most recently
     expect(queue.peek()).toEqual(3)
 })
 
+test("test dequeue: dequeue in a newly created list should return null",() => {
+    expect(createQueue().dequeue()).toBeNull()
+})
+
+test("test dequeue: queue with 2 element should dequeue the one that was most recently added",() => {
+    const queue = createQueue()
+    queue.enqueue(2)
+    queue.enqueue(3)
+    expect(queue.dequeue()).toEqual(3)
+})
+
+test("test clear: a queue that was cleared should be empty",() => {
+    const queue = createQueue()
+    queue.enqueue(2)
+    queue.clear()
+    expect(queue.isEmpty()).toBeTruthy
+})
+
+
+
 let param = [5, 10, 1000000]
 // parameterized test, apply to each value of the parameter
 test.each(param)("test enqueue: enqueued number %d is correct", (nr) => {
