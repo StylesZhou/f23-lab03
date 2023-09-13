@@ -24,7 +24,8 @@ import static org.junit.Assert.*;
  */
 public class IntQueueTest {
 
-    private IntQueue mQueue;
+    // private IntQueue mQueue;
+    private ArrayIntQueue mQueue;
     private List<Integer> testList;
 
     /**
@@ -33,11 +34,20 @@ public class IntQueueTest {
     @Before
     public void setUp() {
         // comment/uncomment these lines to test each class
-        mQueue = new LinkedIntQueue();
-//        mQueue = new ArrayIntQueue();
+        // mQueue = new LinkedIntQueue();
+       mQueue = new ArrayIntQueue();
 
         testList = new ArrayList<>(List.of(1, 2, 3));
     }
+    @Test
+    public void testClear(){
+        for (int i = 0; i < testList.size(); i++) {
+        mQueue.enqueue(testList.get(i));
+        }
+        mQueue.clear();
+        assertTrue(mQueue.isEmpty());
+    }
+
 
     @Test
     public void testIsEmpty() {
@@ -72,12 +82,37 @@ public class IntQueueTest {
     }
 
     @Test
+    public void testEnqueueOutOfCapacity() {
+        mQueue.enqueue(1);
+        mQueue.dequeue();
+        for (int i = 1; i < 12; i++) {
+            mQueue.enqueue(i);
+            assertEquals((Integer)1, mQueue.peek());
+            assertEquals(i, mQueue.size());
+        }
+         assertEquals(11, mQueue.size());
+    }
+  
+
+   
+    
+    @Test
     public void testDequeue() {
         testList.forEach(n -> mQueue.enqueue(n));
         for (int i = 0; i < testList.size(); i++) {
             assertEquals(testList.get(i), mQueue.dequeue());
             assertEquals(testList.size() - i - 1, mQueue.size());
         }
+    }
+
+    @Test
+    public void testEmptyDequeue() {
+       assertNull(mQueue.dequeue());
+    }
+
+    @Test
+    public void testSize() {
+       assertEquals(3,testList.size());
     }
 
     @Test
